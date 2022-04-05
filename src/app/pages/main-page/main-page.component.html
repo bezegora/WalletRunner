@@ -1,0 +1,7 @@
+<h1>App html</h1>
+<div *ngIf="mockCards.length; else noelement" class="container">
+  <div *ngFor="let c of mockCards">
+    <app-card [card]="c"></app-card>
+  </div>
+</div>
+<ng-template #noelement>No Elements</ng-template>
