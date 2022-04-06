@@ -8,10 +8,10 @@ export class GetCardService {
   private _mockCard!: Card[]
 
   constructor() {
-    this.initialize()
+    this._initialize()
   }
 
-  public initialize(): void{
+  public _initialize(): void{
     this._mockCard =  [
       { title: 'Пятерочка', num: 123456789, id: 1 },
       { title: 'Магнит', num: 123456, id: 2 },
@@ -20,6 +20,7 @@ export class GetCardService {
   }
 
   getCardById(id: number) {
+    console.log(id)
     return this._mockCard.filter((card: Card) => {
       return card.id === id
     })[0]

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Card } from 'src/app/app.component';
 import { GetCardService } from 'src/app/services/get-card.service';
 
@@ -10,17 +10,21 @@ import { GetCardService } from 'src/app/services/get-card.service';
 })
 export class CardPageComponent implements OnInit {
   card!: Card
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private cardService: GetCardService
-  ) {
+  ) { }
 
-  }
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params)=>{
+    this.route.params.subscribe((params: Params) => {
       console.log(params['id'])
       this.card = this.cardService.getCardById(+params['id'])
     })
   }
 
+  onClickBack() {
+    this.router.navigate(['main-page'])
+  }
 }

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 export interface Card {
   title: string
   num: number
-  id?: number
+  id: number
 }
 
 @Component({
