@@ -8,19 +8,18 @@ import { CardPageComponent } from './cards/page/card-page/card-page.component';
 import { FormsModule } from '@angular/forms';
 import { CardListComponent } from './cards/components/card-list/card-list.component';
 import { CardItemComponent } from './cards/components/card-item/card-item.component';
+import { CardsModule } from './cards/cards.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageComponent,
-    CardPageComponent,
-    CardListComponent,
-    CardItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    CardsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

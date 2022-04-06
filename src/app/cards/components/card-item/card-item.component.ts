@@ -18,8 +18,6 @@ export class CardItemComponent implements OnInit {
   }
 
   onCardClick() {
-    console.log('move')
     this.router.navigate(['card', this.card.id])
-    console.log('end')
   }
 }

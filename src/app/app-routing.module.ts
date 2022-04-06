@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'card/:id',
-    component: CardPageComponent,
+    loadChildren: () => import('./cards/cards.module').then(m => m.CardsModule)
   }
 ];
 

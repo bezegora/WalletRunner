@@ -20,7 +20,6 @@ export class GetCardService {
   }
 
   getCardById(id: number) {
-    console.log(id)
     return this._mockCard.filter((card: Card) => {
       return card.id === id
     })[0]

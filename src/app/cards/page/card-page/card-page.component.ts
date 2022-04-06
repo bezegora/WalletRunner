@@ -19,7 +19,6 @@ export class CardPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      console.log(params['id'])
       this.card = this.cardService.getCardById(+params['id'])
     })
   }
