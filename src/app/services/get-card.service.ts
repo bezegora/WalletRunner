@@ -5,11 +5,23 @@ import { Card } from '../app.component';
   providedIn: 'root'
 })
 export class GetCardService {
-  _mockCard!: Card[]
-  constructor() { }
+  private _mockCard!: Card[]
 
-  getCard(id: number) {
-    this._mockCard
-    return this._mockCard[id]
+  constructor() {
+    this.initialize()
+  }
+
+  public initialize(): void{
+    this._mockCard =  [
+      { title: 'Пятерочка', num: 123456789, id: 1 },
+      { title: 'Магнит', num: 123456, id: 2 },
+      { title: 'Монетка', num: 123, id: 3 }
+    ];
+  }
+
+  getCardById(id: number) {
+    return this._mockCard.filter((card: Card) => {
+      return card.id === id
+    })[0]
   }
 }

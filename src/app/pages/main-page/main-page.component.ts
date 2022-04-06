@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   mockCards: Card[] = [
     { title: 'Пятерочка', num: 123456789, id: 1 },
     { title: 'Магнит', num: 123456, id: 2 },

@@ -14,6 +14,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   onCardClick() {
     this.router.navigate(['/card', this.card.id])
   }
