@@ -1,0 +1,6 @@
+{
+	"appId": "com.walletrunner.app",
+	"appName": "WalletRunner",
+	"webDir": "dist/wallet-runner",
+	"bundledWebRuntime": false
+}
