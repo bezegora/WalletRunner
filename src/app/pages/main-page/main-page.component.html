@@ -1,9 +1,6 @@
 <h1>Ваши карты</h1>
 <div *ngIf="mockCards.length; else noelement" class="container">
-  <!-- <div *ngFor="let c of mockCards">
-    <app-card [card]="c"></app-card>
-  </div> -->
   <app-card-list></app-card-list>
+  <button class="btn" (click)="toAddCardPage()">&plus;</button>
 </div>
 <ng-template #noelement>No Elements</ng-template>
-

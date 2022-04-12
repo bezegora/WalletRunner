@@ -3,21 +3,19 @@ import { Router } from '@angular/router';
 import { Card } from 'src/app/app.component';
 
 @Component({
-  selector: 'app-card-item',
-  templateUrl: './card-item.component.html',
-  styleUrls: ['./card-item.component.scss']
+    selector: 'app-card-item',
+    templateUrl: './card-item.component.html',
+    styleUrls: ['./card-item.component.scss'],
 })
 export class CardItemComponent implements OnInit {
+  @Input() _card!: Card;
 
-  @Input()
-  card!: Card
-
-  constructor(private router: Router) { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
 
-  onCardClick() {
-    this.router.navigate(['card', this.card.id])
+  public onCardClick() {
+      this._router.navigate(['card', this._card.id]);
   }
 }
