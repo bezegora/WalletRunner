@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="configuration">
+        <div>
+            <label for="header">Заголовок:</label>
+            <input type="text" id="header" #header class="simple-input" />
+        </div>
+        <label for="description">Содержимое:</label>
+        <input
+            type="text"
+            id="description"
+            #description
+            content="description"
+            class="simple-input"
+        />
+    </div>
+    <div>
+        <button class="simple-button" (click)="showDialog()">
+            Show Dialog
+        </button>
+    </div>
+</div>
+<modal-dialog
+    *ngIf="isModalDialogVisible"
+    [header]="header.value"
+    [description]="description.value"
+    (isConfirmed)="closeModal($event)"
+></modal-dialog>

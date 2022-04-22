@@ -1,3 +1,15 @@
 * {
-  text-align: center;
+    text-align: center;
+}
+
+input {
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    transition: linear 350ms;
+
+    &.ng-touched.ng-invalid {
+        background-color: pink;
+        border: solid 2px red;
+    }
 }

@@ -1,16 +1,18 @@
 <button class="btn" (click)="onClickBack()">&leftarrow;</button>
-<form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
-  <button class="btn" type="submit" [disabled]="!cardForm.valid">Submit</button>
-  <h1>WALLET RUNNER</h1>
-  <p>ДОБАВЛЕНИЕ НОВОЙ КАРТЫ</p>
-  <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
-  <select name="stores" id="storesSelect" formControlName="store">
-    <option *ngFor="let s of stores" [value]="s">{{ s }}</option>
-  </select>
+<button class="btn" type="submit" [disabled]="!cardForm.valid" (click)="onSubmit()">
+    Submit
+</button>
+<h1>WALLET RUNNER</h1>
+<form [formGroup]="cardForm">
+    <p>ДОБАВЛЕНИЕ НОВОЙ КАРТЫ</p>
+    <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
+    <select name="stores" id="storesSelect" formControlName="store">
+        <option *ngFor="let s of stores" [value]="s">{{ s }}</option>
+    </select>
 
-  <label for="barcode">ШТРИХКОД</label>
-  <p id="barcode">PLACEHOLDER</p>
+    <label for="barcode">ШТРИХКОД</label>
+    <p id="barcode">PLACEHOLDER</p>
 
-  <label for="num">НОМЕР КАРТЫ</label>
-  <input id="num" type="number" formControlName="cardNum" />
+    <label for="num">НОМЕР КАРТЫ</label>
+    <input id="num" type="number" formControlName="cardNum" />
 </form>

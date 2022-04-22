@@ -1,38 +1,56 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GetCardService } from "src/app/services/get-card.service";
-import { Card } from '../../app.component';
+import { CardService } from 'src/app/services/card.service';
+import { ICard } from '../../app.component';
 
 @Component({
-  selector: 'app-add-card-page',
-  templateUrl: './add-card-page.component.html',
-  styleUrls: ['./add-card-page.component.scss'],
+    selector: 'app-add-card-page',
+    templateUrl: './add-card-page.component.html',
+    styleUrls: ['./add-card-page.component.scss'],
 })
 export class AddCardPageComponent {
-  constructor(
-    private router: Router,
-    private cardService: GetCardService,
-  ) { }
+    public stores: string[] = ['ПЯТЁРОЧКА', 'КРАСНОЕ&БЕЛОЕ', 'ПЕРЕКРЁСТОК', 'ЛЕНТА', 'МАГНИТ', 'МОНЕТКА'];
+    public cardForm: FormGroup = new FormGroup({
+        store: new FormControl('', Validators.required),
+        cardNum: new FormControl('', Validators.required),
+    });
 
-  stores: string[] = ['ПЯТЁРОЧКА', 'КРАСНОЕ&БЕЛОЕ', 'ПЕРЕКРЁСТОК', 'ЛЕНТА'];
+    constructor(
+        private _router: Router,
+        private _cardService: CardService,
+    ) { }
 
-  cardForm = new FormGroup({
-    store: new FormControl('', Validators.required),
-    cardNum: new FormControl('', Validators.required),
-  });
+    public onClickBack(): void {
+        this._router.navigate(['main-page']);
+    }
 
-  onClickBack() {
-    this.router.navigate(['main-page']);
-  }
+    public async onSubmit(): Promise<void> {
+        const card: ICard = {
+            title: this.cardForm.value.store,
+            num: this.cardForm.value.cardNum,
+            id: this.cardForm.value.cardNum,
+        };
+        // Object.keys(this.cardForm.controls).map((x: string) => this.cardForm.controls[x]).forEach((control: FormGroup) => {
+        //     // control.controls.markAsTouched();
+        // });
+        this.cardForm.controls['store'].markAsTouched();
+        this.cardForm.controls['cardNum'].markAsDirty();
+        this.markFormGroupTouched(this.cardForm);
+        if (this.cardForm.valid && await this._cardService.getConfirm(`ДОБАВИТЬ КАРТУ?`)) {
+            this._cardService.addCard(card);
+            this._router.navigate(['main-page']);
+        }
+    }
 
-  onSubmit() {
-    const card: Card = {
-      title: this.cardForm.value.store,
-      num: this.cardForm.value.cardNum,
-      id: this.cardForm.value.cardNum,
-    };
-    this.cardService.addCard(card);
-    this.router.navigate(['main-page']);
-  }
+    private markFormGroupTouched(formGroup: FormGroup): void {
+        (<any>Object).values(formGroup.controls).forEach((control) => {
+            if (control.controls) { // control is a FormGroup
+                this.markFormGroupTouched(control);
+            } else { // control is a FormControl
+                control.markAsTouched();
+            }
+        });
+    }
+
 }

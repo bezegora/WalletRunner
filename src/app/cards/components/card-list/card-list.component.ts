@@ -1,21 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Card } from 'src/app/app.component';
-import {GetCardService} from 'src/app/services/get-card.service';
+import { Component } from '@angular/core';
+import { ICard } from 'src/app/app.component';
+import { CardService } from 'src/app/services/card.service';
 
 @Component({
-  selector: 'app-card-list',
-  templateUrl: './card-list.component.html',
-  styleUrls: ['./card-list.component.scss'],
+    selector: 'app-card-list',
+    templateUrl: './card-list.component.html',
+    styleUrls: ['./card-list.component.scss'],
 })
-export class CardListComponent implements OnInit {
-  mockCards!: Card[];
+export class CardListComponent {
+    public mockCards: ICard[];
 
-  constructor(
-    cardService: GetCardService,
-  ) {
-    this.mockCards = cardService.getCardList();
-  }
-
-  ngOnInit(): void {
-  }
+    constructor(
+        cardService: CardService,
+    ) {
+        this.mockCards = cardService.getCardList();
+    }
 }

@@ -1,21 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Card } from 'src/app/app.component';
+import { ICard } from 'src/app/app.component';
 
 @Component({
     selector: 'app-card-item',
     templateUrl: './card-item.component.html',
     styleUrls: ['./card-item.component.scss'],
 })
-export class CardItemComponent implements OnInit {
-  @Input() _card!: Card;
+export class CardItemComponent {
+    @Input()
+    public card!: ICard;
 
-  constructor(private _router: Router) { }
+    constructor(private _router: Router) { }
 
-  ngOnInit(): void {
-  }
-
-  public onCardClick() {
-      this._router.navigate(['card', this._card.id]);
-  }
+    public onCardClick(): void {
+        this._router.navigate(['card', this.card.id]);
+    }
 }

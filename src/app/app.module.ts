@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { CardsModule } from './cards/cards.module';
 import { AddCardPageComponent } from './pages/add-card-page/add-card-page.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { AddCardPageComponent } from './pages/add-card-page/add-card-page.compon
         ReactiveFormsModule,
         CardsModule,
         BrowserAnimationsModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent],

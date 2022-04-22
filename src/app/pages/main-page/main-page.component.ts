@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Card } from '../../app.component';
+import { CardService } from 'src/app/services/card.service';
+import { ICard } from '../../app.component';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+    selector: 'app-main-page',
+    templateUrl: './main-page.component.html',
+    styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
-  constructor(
-    private _router: Router,
-  ) { }
+    public mockCards: ICard[];
+    constructor(
+        private _router: Router,
+        private _cardService: CardService,
+    ) {
+        this.mockCards = this._cardService.getCardList();
+    }
 
-  ngOnInit(): void {
-  }
+    public ngOnInit(): void {
+    }
 
-  mockCards: Card[] = [
-    { title: 'Пятерочка', num: 123456789, id: 1 },
-    { title: 'Магнит', num: 123456, id: 2 },
-    { title: 'Монетка', num: 123, id: 3 },
-  ];
 
-  toAddCardPage() {
-    this._router.navigate(['add-card']);
-  }
+    public toAddCardPage(): void {
+        this._router.navigate(['add-card']);
+    }
 }
