@@ -1,17 +1,23 @@
 <button class="btn" (click)="onClickBack()">&leftarrow;</button>
-<form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
-    <button class="btn" type="submit" [disabled]="!storeForm.valid">
-        submit
-    </button>
-    <h1>WALLET RUNNER</h1>
-    <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
-    <select name="stores" id="storesSelect" formControlName="store">
-        <!-- <option [ngValue]="card.title">{{card.title}}</option> -->
-        <option *ngFor="let s of stores" [ngValue]="s">{{ s }}</option>
-    </select>
-</form>
-<br />
-<br />
-<br />
-<br />
-<p>{{ card.num }}</p>
+<button
+    class="btn menu-btn"
+    type="submit"
+    [disabled]="!storeForm.valid"
+    (click)="onSubmit()"
+>
+    &#10004;
+</button>
+<div>
+    <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+        <h1>WALLET RUNNER</h1>
+        <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
+        <select name="stores" id="storesSelect" formControlName="store">
+            <option *ngFor="let s of stores" [ngValue]="s">{{ s }}</option>
+        </select>
+    </form>
+    <br />
+    <br />
+    <canvas id="barcode"></canvas>
+    <br />
+    <!-- <p>{{ card.num | split}}</p> -->
+</div>

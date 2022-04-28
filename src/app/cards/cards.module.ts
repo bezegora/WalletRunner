@@ -6,6 +6,7 @@ import { CardItemComponent } from './components/card-item/card-item.component';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { CardPageComponent } from './pages/card-page/card-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NumberPipe } from '../pipes/number.pipe';
 
 const routes: Routes = [
     {
@@ -24,6 +25,7 @@ const routes: Routes = [
         CardListComponent,
         CardItemComponent,
         RedactComponent,
+        NumberPipe,
     ],
     imports: [
         CommonModule,

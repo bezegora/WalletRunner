@@ -15,5 +15,5 @@ export class CardItemComponent {
 
     public onCardClick(): void {
         this._router.navigate(['card', this.card.id]);
-    }
+    };
 }

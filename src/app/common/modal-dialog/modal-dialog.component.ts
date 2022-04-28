@@ -13,8 +13,8 @@ export class ModalDialogComponent {
     @Output() private _isConfirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
     private confirm(): void {
         this._isConfirmed.emit(true);
-    }
+    };
     private close(): void {
         this._isConfirmed.emit(false);
-    }
+    };
 }

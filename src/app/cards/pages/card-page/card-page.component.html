@@ -1,9 +1,11 @@
-<button class="btn" (click)="onClickBack()">&leftarrow;</button>
-<button class="btn" (click)="onDeleteCard()">&cross;</button>
-<button class="btn" (click)="onRedactCard()"></button>
-<h1>{{ card.title }}</h1>
-<br />
-<br />
-<br />
-<br />
-<p>{{ card.num }}</p>
+<button class="btn" (click)="onClickBack()">&#8592;</button>
+<button class="btn menu-btn" (click)="onDeleteCard()">&#10006;</button>
+<button class="btn menu-btn" (click)="onRedactCard()">&#9998;</button>
+<div>
+    <h1>{{ card.title }}</h1>
+    <br />
+    <br />
+    <canvas id="barcode"></canvas>
+    <br />
+    <!-- <p>{{ card.num | split }}</p> -->
+</div>

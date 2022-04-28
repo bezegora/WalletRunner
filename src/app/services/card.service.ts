@@ -3,6 +3,7 @@ import { Dialog } from '@capacitor/dialog';
 import { Observable } from 'rxjs';
 import { ICard } from '../app.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
     providedIn: 'root',
@@ -36,11 +37,27 @@ export class CardService {
 
     public addCard(card: ICard): void {
         this._mockCard.push(card);
+        Storage.set({
+            key: 'cards',
+            value: JSON.stringify(this._mockCard)
+        });
     }
 
     public getCardList(): ICard[] {
         return this._mockCard;
     }
+    // ТЕРКИ С ASYNC/AWAIT
+    // public async getCardList(): Promise<ICard[]> {
+    //     const { value }: { value: string | null } = await Storage.get({
+    //         key: 'cards'
+    //     });
+    //     if (value) {
+    //         const cards: ICard[] = JSON.parse(value);
+    //     }
+    //     const cards: ICard[] = [];
+
+    //     return cards;
+    // }
 
     public deleteCardById(id: number): void {
         this._mockCard = this._mockCard.filter((card: ICard) => card.id !== id);
@@ -74,5 +91,6 @@ export class CardService {
             ]));
 
         return this._http.get(`${this._apiUrl}/SortMyCards`, { params: params });
-    }
+    };
+
 }

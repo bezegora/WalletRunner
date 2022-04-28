@@ -1,118 +1,94 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$WalletRunner-primary: mat.define-palette(mat.$indigo-palette);
-$WalletRunner-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$WalletRunner-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$WalletRunner-theme: mat.define-light-theme((
-  color: (
-    primary: $WalletRunner-primary,
-    accent: $WalletRunner-accent,
-    warn: $WalletRunner-warn,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($WalletRunner-theme);
-
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  background-color: #fff;
-  color: #333;
+    font-family: "Roboto", sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
 }
 
 .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding-top: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 1rem;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 a:hover {
-  color: #666;
+    color: #666;
 }
 
 ul {
-  list-style: none;
+    list-style: none;
 }
 
 img {
-  width: 100%;
+    width: 100%;
 }
 
 .btn {
-  display: inline-block;
-  background: #333333;
-  color: #fff;
-  padding: 0.4rem 1.3rem;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: opacity 0.2s ease-in;
-  outline: none;
+    display: inline-block;
+    background: #333333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    // margin-right: 0.5rem;
+    transition: opacity 0.2s ease-in;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    margin: 0;
+    font-weight: bolder;
+    font-size: xx-large;
+    margin: 0.5rem;
 }
 
 .btn:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
 
 .form-control {
-  display: block;
-  margin-top: 0.3rem;
+    display: block;
+    margin-top: 0.3rem;
 }
 
 .card {
-  padding: 1rem;
-  border: #ccc 1px dotted;
-  margin: 0.7rem 0;
+    padding: 1rem;
+    border: #ccc 1px dotted;
+    margin: 0.7rem 0;
 }
 
 input,
 select,
 textarea {
-  display: block;
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-  margin: 1.2rem 0;
+    display: block;
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    margin: 1.2rem 0;
 }
 
 hr {
-  margin: .5rem 0;
+    margin: 0.5rem 0;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

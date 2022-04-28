@@ -1,6 +1,11 @@
 <button class="btn" (click)="onClickBack()">&leftarrow;</button>
-<button class="btn" type="submit" [disabled]="!cardForm.valid" (click)="onSubmit()">
-    Submit
+<button
+    class="btn menu-btn"
+    type="submit"
+    [disabled]="!cardForm.valid"
+    (click)="onSubmit()"
+>
+    &#10003;
 </button>
 <h1>WALLET RUNNER</h1>
 <form [formGroup]="cardForm">
@@ -11,7 +16,7 @@
     </select>
 
     <label for="barcode">ШТРИХКОД</label>
-    <p id="barcode">PLACEHOLDER</p>
+    <button (click)="onStartScan()">NTCN</button>
 
     <label for="num">НОМЕР КАРТЫ</label>
     <input id="num" type="number" formControlName="cardNum" />

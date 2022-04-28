@@ -1,4 +1,4 @@
 <div class="card" (click)="onCardClick()">
   <h2>{{ card.title }}</h2>
-  <p>{{ card.num }}</p>
+  <p>{{ card.num | split }}</p>
 </div>

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import * as JsBarcode from 'jsbarcode';
 import { ICard } from 'src/app/app.component';
 import { CardService } from 'src/app/services/card.service';
 
@@ -9,7 +10,7 @@ import { CardService } from 'src/app/services/card.service';
     templateUrl: './redact.page.html',
     styleUrls: ['./redact.page.scss']
 })
-export class RedactComponent {
+export class RedactComponent implements OnInit {
 
     public stores: string[] = ['ПЯТЁРОЧКА', 'КРАСНОЕ&БЕЛОЕ', 'ПЕРЕКРЁСТОК', 'ЛЕНТА', 'МАГНИТ', 'МОНЕТКА'];
     public storeForm!: FormGroup;
@@ -26,6 +27,9 @@ export class RedactComponent {
         this.storeForm = new FormGroup({
             store: new FormControl(this.card.title)
         });
+    }
+    public ngOnInit(): void {
+        JsBarcode('#barcode', this.card.num.toString());
     }
 
     public async onSubmit(): Promise<void> {

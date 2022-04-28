@@ -13,3 +13,12 @@ input {
         border: solid 2px red;
     }
 }
+
+:disabled {
+    background-color: grey;
+    transition: linear 350ms;
+}
+
+.menu-btn {
+    float: right;
+}

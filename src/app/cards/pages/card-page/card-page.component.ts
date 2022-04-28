@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import * as JsBarcode from 'jsbarcode';
 import { ICard } from 'src/app/app.component';
 import { CardService } from 'src/app/services/card.service';
 
@@ -21,6 +22,7 @@ export class CardPageComponent implements OnInit {
         this._route.params.subscribe((params: Params) => {
             this.card = this._cardService.getCardById(+params['id']);
         });
+        JsBarcode('#barcode', this.card.num.toString());
     }
 
     public onClickBack(): void {

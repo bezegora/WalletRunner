@@ -1,6 +1,9 @@
-<h1>Ваши карты</h1>
+<h1>ВАШИ КАРТЫ</h1>
 <div *ngIf="mockCards.length; else noelement" class="container">
-  <app-card-list></app-card-list>
-  <button class="btn" (click)="toAddCardPage()">&plus;</button>
+    <app-card-list></app-card-list>
+    <button class="btn" (click)="toAddCardPage()">&plus;</button>
 </div>
-<ng-template #noelement>No Elements</ng-template>
+<ng-template #noelement class="container"
+    ><p>ДОБАВЬТЕ СВОИ КАРТЫ</p>
+    <button class="btn" (click)="toAddCardPage()">&plus;</button>
+</ng-template>
