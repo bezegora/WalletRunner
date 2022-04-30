@@ -1,0 +1,10 @@
+<h1>ВАШИ КАРТЫ</h1>
+<div *ngIf="mockCards.length; else noelement" class="container">
+    <app-card-list></app-card-list>
+    <button class="btn" (click)="toAddCardPage()">&plus;</button>
+    <button class="btn" (click)="geolocationTest()"></button>
+</div>
+<ng-template #noelement class="container"
+    ><p>ДОБАВЬТЕ СВОИ КАРТЫ</p>
+    <button class="btn" (click)="toAddCardPage()">&plus;</button>
+</ng-template>

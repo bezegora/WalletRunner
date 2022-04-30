@@ -5,16 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainPageComponent } from './pages/main-page/main-page.component';
-import { CardsModule } from './cards/cards.module';
-import { AddCardPageComponent } from './pages/add-card-page/add-card-page.component';
+import { MainCabinetPage } from './children/main-cabinet/pages/main-cabinet/main-cabinet.page';
+import { CardsModule } from './children/main-cabinet/children/cards/cards.module';
 import { HttpClientModule } from '@angular/common/http';
+import { CabinetRoutingModule } from './children/main-cabinet/cabinet.routing.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        MainPageComponent,
-        AddCardPageComponent,
+        MainCabinetPage,
     ],
     imports: [
         BrowserModule,
@@ -23,7 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
         ReactiveFormsModule,
         CardsModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        CabinetRoutingModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

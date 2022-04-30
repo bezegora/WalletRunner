@@ -1,0 +1,24 @@
+<button class="btn" (click)="onClickBack()">&leftarrow;</button>
+<button
+    class="btn menu-btn"
+    type="submit"
+    [disabled]="!cardForm.valid"
+    (click)="onSubmit()"
+>
+    &#10003;
+</button>
+<h1>WALLET RUNNER</h1>
+<form [formGroup]="addCardViewModel.cardForm">
+    <p>ДОБАВЛЕНИЕ НОВОЙ КАРТЫ</p>
+    <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
+    <select name="stores" id="storesSelect" formControlName="store">
+        <option *ngFor="let s of stores" [value]="s">{{ s }}</option>
+    </select>
+
+    <label for="barcode">ШТРИХКОД</label>
+    <p id="barcode">PLACEHOLDER</p>
+    <!-- <button (click)="onStartScan()">NTCN</button> -->
+
+    <label for="num">НОМЕР КАРТЫ</label>
+    <input id="num" type="number" formControlName="cardNum" />
+</form>
