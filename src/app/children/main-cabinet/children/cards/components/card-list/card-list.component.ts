@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { from, map, Observable } from 'rxjs';
 import { CardModel } from '../../../../../main-cabinet/models/card.model';
 
 import { CardService } from '../../../../../main-cabinet/services/card.service';
@@ -9,15 +10,20 @@ import { CardService } from '../../../../../main-cabinet/services/card.service';
     templateUrl: './card-list.component.html',
     styleUrls: ['./styles/card-list.component.scss'],
 })
-export class CardListComponent {
-    public mockCards: CardModel[];
+export class CardListComponent implements OnInit {
+    public mockCards$!: Observable<CardModel[]>;
 
     constructor(
-        cardService: CardService,
+        private _cardService: CardService,
         private _router: Router,
     ) {
-        this.mockCards = cardService.getCardList();
     }
+
+    public ngOnInit(): void {
+        this.mockCards$ = from(this._cardService.getCardList());
+    }
+
+
 
     public onCardClick(card: CardModel): void {
         this._router.navigate(['card', card.id]);

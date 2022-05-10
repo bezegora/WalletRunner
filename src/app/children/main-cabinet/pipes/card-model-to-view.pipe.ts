@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { CardModel } from '../models/card.model';
 import { CardViewModel } from '../viewmodels/card.viewmodel';
 

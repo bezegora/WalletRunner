@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 
-import { TinyNotificationService } from '../../../../../modules/services/tiny-notification.service';
-import { TinyNotificationModel } from '../../../../../modules/tiny-notification-model/tiny-notification.model';
 import { CardService } from '../../../../main-cabinet/services/card.service';
 import { CardModel } from '../../../models/card.model';
+import { ModalComponent } from '../../../modules/modal-window/modal/modal.component';
+import { RefDirective } from '../../../modules/modal-window/ref.directive';
 import { AddCardViewModel } from './add-card.view-model';
 
 @Component({
@@ -15,38 +14,44 @@ import { AddCardViewModel } from './add-card.view-model';
 })
 export class AddCardPage {
     public stores: string[] = ['Пятёрочка', 'Красное&белое', 'Перекресток', 'Лента', 'Магнит', 'Монетка'];
-    public cardForm: FormGroup = new FormGroup({
-        store: new FormControl('', Validators.required),
-        cardNum: new FormControl('', Validators.required),
-    });
 
     public addCardViewModel: AddCardViewModel = new AddCardViewModel();
+    @ViewChild(RefDirective, { static: false }) public refDir!: RefDirective;
 
     constructor(
         private _router: Router,
         private _cardService: CardService,
-        private _notificationService: TinyNotificationService,
+        private _resolver: ComponentFactoryResolver,
     ) { }
+
+
 
     public onClickBack(): void {
         this._router.navigate(['cabinet']);
     }
 
-    public async onSubmit(): Promise<void> {
+    public onSubmit(): void {
 
-        let card = this.addCardViewModel.toModel();
+        const card: CardModel = this.addCardViewModel.toModel();
+        if (this.addCardViewModel.cardForm.valid) {
+            this.showModal(
+                'СОХРАНИТЬ КАРТУ?',
+                'ХОТИТЕ СОХРАНИТЬ ЭТУ КАРТУ В КОШЕЛЬКЕ',
+                () => {
+                    this.refDir.containerRef.clear();
+                    this._cardService.addCard(card);
+                    this._router.navigate(['cabinet']);
+                },
+                () => {
+                    this.refDir.containerRef.clear();
+                });
+        };
 
-        this._notificationService.showToast(new TinyNotificationModel('ТЕСТ', 'ТЕСТ'));
-        // Object.keys(this.cardForm.controls).map((x: string) => this.cardForm.controls[x]).forEach((control: FormGroup) => {
-        //     // control.controls.markAsTouched();
-        // });
-        // this.cardForm.controls['store'].markAsTouched();
-        // this.cardForm.controls['cardNum'].markAsDirty();
-        this.cardForm.markAllAsTouched();
-        if (this.cardForm.valid && await this._cardService.getConfirm(`ДОБАВИТЬ КАРТУ?`)) {
-            this._cardService.addCard(card);
-            this._router.navigate(['cabinet']);
-        }
+        // this._notificationService.showToast(new TinyNotificationModel('ТЕСТ', 'ТЕСТ'));
+        // if (this.addCardViewModel.cardForm.valid && await this._cardService.getConfirm(`ДОБАВИТЬ КАРТУ?`)) {
+        //     this._cardService.addCard(card);
+        //     this._router.navigate(['cabinet']);
+        // }
     }
 
     // private markFormGroupTouched(formGroup: FormGroup): void {
@@ -65,6 +70,16 @@ export class AddCardPage {
         if (result.hasContent) {
             console.log(result.content);
         }
+    }
+    private showModal(modalTitle: string, modalDescription: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
+        const modalFactory: ComponentFactory<ModalComponent> = this._resolver.resolveComponentFactory(ModalComponent);
+        this.refDir.containerRef.clear();
+        const component: ComponentRef<ModalComponent> = this.refDir.containerRef.createComponent(modalFactory);
+
+        component.instance.title = modalTitle;
+        component.instance.description = modalDescription;
+        component.instance.agree.subscribe(modalAgree);
+        component.instance.disagree.subscribe(modalDisagree);
     }
 
 }

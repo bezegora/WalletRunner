@@ -1,3 +1,7 @@
 <div>
-  <app-card-item *ngFor="let c of mockCards" [card]="c | cardConvertModel" (click)="onCardClick(c)"></app-card-item>
+    <app-card-item
+        *ngFor="let c of mockCards$ | async"
+        [card]="c | cardConvertModel"
+        (click)="onCardClick(c)"
+    ></app-card-item>
 </div>

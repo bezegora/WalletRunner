@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ModalModule } from '../../modules/modal-window/modal/modal.module';
 import { AddCardPage } from './pages/add-card.page';
 
 const routes: Routes = [
@@ -20,6 +22,7 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         FormsModule,
         ReactiveFormsModule,
+        ModalModule,
     ],
     exports: [
         AddCardPage,

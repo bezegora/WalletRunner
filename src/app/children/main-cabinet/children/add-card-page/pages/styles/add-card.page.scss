@@ -1,12 +1,16 @@
 * {
     text-align: center;
+    display: inline-block;
 }
 
-input {
-    display: block;
-    margin: 20px auto;
+input,
+select {
+    margin: -20px auto 40px auto;
     text-align: center;
     transition: linear 350ms;
+    border: 2px solid #cfcfcf;
+    border-radius: 10px;
+    width: 80%;
 
     &.ng-touched.ng-invalid {
         background-color: pink;
@@ -15,10 +19,68 @@ input {
 }
 
 :disabled {
-    background-color: grey;
-    transition: linear 350ms;
+    opacity: 0.3;
 }
 
 .menu-btn {
     float: right;
+}
+
+h1 {
+    font-family: "SF Pro Display";
+    font-style: normal;
+    font-weight: bolder;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.085em;
+    position: absolute;
+    top: 7%;
+    bottom: 85%;
+    left: 25%;
+    right: 25%;
+}
+
+p,
+label {
+    font-family: "SF Pro Display", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: small;
+    line-height: 12px;
+    color: #505759;
+    letter-spacing: 0.04em;
+}
+
+label {
+    margin-left: 11%;
+    float: left;
+}
+
+.back-btn {
+    width: 23px;
+    height: 23px;
+    position: absolute;
+    left: 8%;
+    right: 85%;
+    top: 10%;
+    bottom: 85%;
+}
+
+.confirm-btn {
+    position: absolute;
+    left: 85%;
+    right: 8%;
+    top: 10%;
+    bottom: 85%;
+    background: 0 0
+        url("../../../../../../../assets/buttons/icon_checkMark.png") no-repeat;
+    width: 24px;
+    height: 24px;
+    border: none;
+}
+
+form {
+    margin-top: 8em;
+    width: 100%;
 }

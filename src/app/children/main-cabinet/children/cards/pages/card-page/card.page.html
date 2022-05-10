@@ -1,6 +1,9 @@
 <button class="btn" (click)="onClickBack()">&#8592;</button>
 <button class="btn menu-btn" (click)="onDeleteCard()">&#10006;</button>
 <button class="btn menu-btn" (click)="onRedactCard()">&#9998;</button>
+<button class="btn menu-btn star" (click)="onChangeFavourites()" *ngIf="!card.isFavorite">&star;</button>
+<button class="btn menu-btn star" (click)="onChangeFavourites()" *ngIf="card.isFavorite">&starf;</button>
+<ng-template appRef></ng-template>
 <div>
     <h1>{{ card.title }}</h1>
     <br />

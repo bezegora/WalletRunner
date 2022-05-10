@@ -12,7 +12,7 @@
   "rules": {
     "prefer-const": "error",
     "semi": "error",
-    "unused-imports/no-unused-imports": "on",
+    "unused-imports/no-unused-imports": "off",
     "padding-line-between-statements": [
       "error",
       {

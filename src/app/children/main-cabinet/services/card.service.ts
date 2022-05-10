@@ -1,9 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Dialog } from '@capacitor/dialog';
-import { map, Observable } from 'rxjs';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { Storage } from '@capacitor/storage';
-import { ICard } from '../interfaces/card.interface';
+import { GetResult, Storage } from '@capacitor/storage';
+import { from, map, Observable, of } from 'rxjs';
+
 import { CardModel } from '../models/card.model';
 
 @Injectable({
@@ -15,17 +14,17 @@ export class CardService {
 
     constructor(
         private _http: HttpClient,
-    ) {
-        this.initialize();
-    }
+    ) { }
 
-    public initialize(): void {
-        this._mockCard = [
-            { title: 'Пятёрочка', cardNumber: 123456789, id: 1 },
-            { title: 'Магнит', cardNumber: 123456, id: 2 },
-            { title: 'Монетка', cardNumber: 123, id: 3 },
-        ].map((el: ICard) => new CardModel(el))
-    }
+    // public initialize(): void {
+    // this._mockCard = [
+    //     { title: 'Пятёрочка', cardNumber: 123456789, id: 1 },
+    //     { title: 'Магнит', cardNumber: 123456, id: 2 },
+    //     { title: 'Монетка', cardNumber: 123, id: 3 },
+    // ].map((el: ICard) => new CardModel(el));
+    // this.refreshStorage();
+    // console.log('init');
+    // }
 
     public getCardById(id: number): CardModel {
         const findedCard: CardModel | undefined = this._mockCard.find((card: CardModel) => card.id === id);
@@ -36,32 +35,84 @@ export class CardService {
         return findedCard;
     }
 
+    public async getCardList(): Promise<CardModel[]> {
+        // let cards: CardModel[];
+        const test: { value: string | null } = await Storage.get({
+            key: 'cards'
+        });
+        if (test.value) {
+            let tmp: CardModel[] = JSON.parse(test.value);
+            tmp = tmp.sort((a: CardModel, b: CardModel) => Number.parseInt(a.isFavorite.toString()) - Number.parseInt(b.isFavorite.toString()));
+            this._mockCard = tmp;
+
+            return tmp;
+        } else {
+            throw new Error('Storage пустой');
+        }
+
+        // .then((response: GetResult) => {
+        //     if (response.value) {
+        //         const cards: CardModel[] = JSON.parse(response.value);
+        //         console.log(cards);
+
+        //         return of(cards);
+
+        //         // .pipe(
+        //         //     map((v: CardModel) => {
+        //         //         this._mockCard.push(v);
+        //         //         console.log(v);
+
+        //         //         return v;
+        //         //     })
+        //         // );
+        //     }
+        //     console.log('no response');
+
+        //     return of([]).pipe(
+        //         map((v: any) => {
+        //             return v;
+        //         })
+        //     );
+
+        // });
+        // console.log('no response');
+
+        // return of([]).pipe(
+        //     map((v: any) => {
+        //         return v;
+        //     })
+        // );
+
+    }
+
     public addCard(card: CardModel): void {
-        this._mockCard.push(card);
-        Storage.set({
-            key: 'cards',
-            value: JSON.stringify(this._mockCard)
+        Storage.get({
+            key: 'cards'
+        }).then((response: GetResult) => {
+            if (response.value !== null && response.value !== 'undefined') {
+                this._mockCard = JSON.parse(response.value);
+            } else {
+                this._mockCard = [];
+            }
+            this._mockCard.push(card);
+            this.refreshStorage();
         });
     }
 
-    public getCardList(): CardModel[] {
-        return this._mockCard;
-    }
-    // ТЕРКИ С ASYNC/AWAIT
-    // public async getCardList(): Promise<CardModel[]> {
-    //     const { value }: { value: string | null } = await Storage.get({
-    //         key: 'cards'
-    //     });
-    //     if (value) {
-    //         const cards: CardModel[] = JSON.parse(value);
-    //     }
-    //     const cards: CardModel[] = [];
+    public changeIsFavorite(id: number): void {
+        this._mockCard = this._mockCard.map((card: CardModel) => {
+            if (card.id === id) {
+                card.isFavorite = !card.isFavorite;
+            }
 
-    //     return cards;
-    // }
+            return card;
+        });
+        this.refreshStorage();
+    }
 
     public deleteCardById(id: number): void {
         this._mockCard = this._mockCard.filter((card: CardModel) => card.id !== id);
+        this.refreshStorage();
     }
 
     public redactCardById(id: number, newTitle: string): void {
@@ -70,66 +121,60 @@ export class CardService {
                 card.title = newTitle;
             }
         });
+        this.refreshStorage();
     }
 
-    public getConfirm = async (prompt: string): Promise<boolean> => {
-        const { value }: { value: boolean } = await Dialog.confirm({
-            title: 'Confirm',
-            message: prompt,
+    public getSortedStoresFromServer(lat: number, long: number): Observable<CardModel[]> {
+
+        const cards: string[] = this._mockCard.map((card: CardModel) => {
+            return card.title;
         });
 
-        return value.valueOf();
-    };
-
-    public getSortedCards(lat: number, long: number): Observable<CardModel[]> {
-        // const params: HttpParams = new HttpParams()
-        //     .append('latitude', lat)
-        //     .append('longitude', long)
-        //     .append('cards', JSON.stringify(
-        //         this._mockCard.map((card: CardModel) => {
-        //             return card.title;
-        //         })
-        //     ));
-
-
-        const cards: string[] =
-            this._mockCard.map((card: CardModel) => {
-                return card.title;
-            });
-        const requestParams: any = {
-            lattitude: lat,
+        const requestParams: { latitude: number, longitude: number, cards: string[] } = {
+            latitude: lat,
             longitude: long,
             cards: cards
         };
 
-        // console.log(params);
+        console.log(requestParams);
 
-        let test: string = `${this._apiUrl}/SortMyCards?`;
-        test += `latitude=${lat}&longitude=${long}`;
-        this._mockCard.forEach((element: CardModel) => {
-            test += `&cards=${element.title}`;
-        });
-        console.log(test);
+        // let test: string = `${this._apiUrl}/SortMyCards?`;
 
-        return this._http.get<ICard[]>(test + '/')
-            .pipe(
-                map((data: ICard[]) => {
-                    return data.map((i: ICard) => new CardModel(i));
-                })
-            );
+        // test += `latitude=${lat}&longitude=${long}`;
+        // this._mockCard.forEach((element: CardModel) => {
+        //     test += `&cards=${element.title}`;
+        // });
 
-        return this._http.post(`${this._apiUrl}/SortMyCards`, { body: requestParams })
+        return this._http.post(`${this._apiUrl}/SortMyCards/`, { body: requestParams })
             .pipe(
                 map((v: any) => {
                     return v;
                 })
             );
 
-
+        // return this._http.get<ICard[]>(test + '/')
+        //     .pipe(
+        //         map((data: ICard[]) => {
+        //             return data.map((i: ICard) => new CardModel(i));
+        //         })
+        //     );
     };
 
-    public test(): void {
-
+    private refreshStorage(): void {
+        Storage.get({
+            key: 'cards'
+        }).then((resp: GetResult) => {
+            if (!resp.value || resp.value === 'undefined') {
+                this._mockCard = [];
+            }
+            Storage.set({
+                key: 'cards',
+                value: JSON.stringify(this._mockCard)
+            }).then(() => {
+                // if (result.value) {
+                //     this._mockCard = JSON.parse(result.value);
+                console.log('refreshed');
+            });
+        });
     }
-
 }

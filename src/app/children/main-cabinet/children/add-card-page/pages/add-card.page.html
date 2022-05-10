@@ -1,24 +1,36 @@
-<button class="btn" (click)="onClickBack()">&leftarrow;</button>
+<!-- <button class="btn" (click)="onClickBack()">&leftarrow;</button> -->
+<img
+    src="../../../../../../assets/buttons/icon_back.png"
+    class="back-btn"
+    (click)="onClickBack()"
+/>
 <button
-    class="btn menu-btn"
+    class="confirm-btn"
     type="submit"
-    [disabled]="!cardForm.valid"
+    [disabled]="!addCardViewModel.cardForm.valid"
     (click)="onSubmit()"
->
-    &#10003;
-</button>
+></button>
 <h1>WALLET RUNNER</h1>
 <form [formGroup]="addCardViewModel.cardForm">
+    <ng-template appRef></ng-template>
     <p>ДОБАВЛЕНИЕ НОВОЙ КАРТЫ</p>
+    <br />
+    <br />
     <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
+    <br />
     <select name="stores" id="storesSelect" formControlName="store">
-        <option *ngFor="let s of stores" [value]="s">{{ s }}</option>
+        <option *ngFor="let store of stores" [value]="store">
+            {{ store }}
+        </option>
     </select>
-
+    <br />
     <label for="barcode">ШТРИХКОД</label>
+    <br />
     <p id="barcode">PLACEHOLDER</p>
-    <!-- <button (click)="onStartScan()">NTCN</button> -->
-
+    <br />
+    <button (click)="onStartScan()">NOT IMPLEMENTED</button>
+    <br />
     <label for="num">НОМЕР КАРТЫ</label>
-    <input id="num" type="number" formControlName="cardNum" />
+    <br />
+    <input id="num" type="number" formControlName="cardNumber" />
 </form>

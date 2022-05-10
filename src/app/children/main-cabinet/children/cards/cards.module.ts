@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { EditCardPage } from './pages/edit-card/edit-card.page';
+
+import { PaintDirective } from '../../directives/paint.directive';
+import { ModalModule } from '../../modules/modal-window/modal/modal.module';
+import { CardConvertModel } from '../../pipes/card-model-to-view.pipe';
+import { NumberPipe } from '../../pipes/number.pipe';
 import { CardItemComponent } from './components/card-item/card-item.component';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { CardPage } from './pages/card-page/card.page';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NumberPipe } from '../../pipes/number.pipe';
-import { CardConvertModel } from '../../pipes/card-model-to-view.pipe';
+import { EditCardPage } from './pages/edit-card/edit-card.page';
 
 const routes: Routes = [
     {
@@ -28,18 +31,22 @@ const routes: Routes = [
         EditCardPage,
         NumberPipe,
         CardConvertModel,
+        PaintDirective,
     ],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
         FormsModule,
         ReactiveFormsModule,
+        ModalModule,
     ],
     exports: [
         CardItemComponent,
         CardListComponent,
         CardPage,
         EditCardPage,
+    ],
+    bootstrap: [
     ],
 })
 export class CardsModule { }
