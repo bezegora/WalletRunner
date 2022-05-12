@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 
@@ -22,7 +22,6 @@ export class AddCardPage {
     constructor(
         private _router: Router,
         private _cardService: CardService,
-        private _resolver: ComponentFactoryResolver,
     ) { }
 
 
@@ -37,14 +36,13 @@ export class AddCardPage {
         if (this.addCardViewModel.cardForm.valid) {
             this.showModal(
                 'СОХРАНИТЬ КАРТУ?',
-                'ХОТИТЕ СОХРАНИТЬ ЭТУ КАРТУ В КОШЕЛЬКЕ',
                 () => {
-                    this.refDir.containerRef.clear();
+                    this.refDir.container.clear();
                     this._cardService.addCard(card);
                     this._router.navigate(['cabinet']);
                 },
                 () => {
-                    this.refDir.containerRef.clear();
+                    this.refDir.container.clear();
                 });
         };
 
@@ -72,13 +70,11 @@ export class AddCardPage {
             console.log(result.content);
         }
     }
-    private showModal(modalTitle: string, modalDescription: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
-        const modalFactory: ComponentFactory<ModalComponent> = this._resolver.resolveComponentFactory(ModalComponent);
-        this.refDir.containerRef.clear();
-        const component: ComponentRef<ModalComponent> = this.refDir.containerRef.createComponent(modalFactory);
+    private showModal(modalTitle: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
+        this.refDir.container.clear();
+        const component: ComponentRef<ModalComponent> = this.refDir.container.createComponent(ModalComponent);
 
         component.instance.title = modalTitle;
-        component.instance.description = modalDescription;
         component.instance.agree.subscribe(modalAgree);
         component.instance.disagree.subscribe(modalDisagree);
     }

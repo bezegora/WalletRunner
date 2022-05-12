@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
@@ -24,7 +24,6 @@ export class EditCardPage implements OnInit {
         private _route: ActivatedRoute,
         private _cardService: CardService,
         private _router: Router,
-        private _resolver: ComponentFactoryResolver,
     ) {
         this._route.params.subscribe((params: Params) => {
             const card: CardModel = this._cardService.getCardById(+params['id']);
@@ -40,37 +39,33 @@ export class EditCardPage implements OnInit {
 
     public onSubmit(): void {
         this.showModal('СОХРАНИТЬ ИЗМЕНЕНИЯ',
-            'ХОТИТЕ ЛИ ВЫ СОХРАНИТЬ ВСЕ ИЗМЕНЕНИЯ?',
             () => {
-                this.refDir.containerRef.clear();
+                this.refDir.container.clear();
                 this._cardService.redactCardById(this.editCardViewModel.card.id, this.storeForm.value.store);
                 this._router.navigate(['card', this.editCardViewModel.card.id]);
             }, () => {
-                this.refDir.containerRef.clear();
+                this.refDir.container.clear();
             });
     }
 
     public onClickBack(): void {
         this.showModal('СОХРАНИТЬ ИЗМЕНЕНИЯ',
-            'ХОТИТЕ ЛИ ВЫ СОХРАНИТЬ ВСЕ ИЗМЕНЕНИЯ?',
             () => {
-                this.refDir.containerRef.clear();
+                this.refDir.container.clear();
                 this._cardService.redactCardById(this.editCardViewModel.card.id, this.storeForm.value.store);
                 this._router.navigate(['card', this.editCardViewModel.card.id]);
             },
             () => {
-                this.refDir.containerRef.clear();
+                this.refDir.container.clear();
                 this._router.navigate(['card', this.editCardViewModel.card.id]);
             });
     }
 
-    private showModal(modalTitle: string, modalDescription: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
-        const modalFactory: ComponentFactory<ModalComponent> = this._resolver.resolveComponentFactory(ModalComponent);
-        this.refDir.containerRef.clear();
-        const component: ComponentRef<ModalComponent> = this.refDir.containerRef.createComponent(modalFactory);
+    private showModal(modalTitle: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
+        this.refDir.container.clear();
+        const component: ComponentRef<ModalComponent> = this.refDir.container.createComponent(ModalComponent);
 
         component.instance.title = modalTitle;
-        component.instance.description = modalDescription;
         component.instance.agree.subscribe(modalAgree);
         component.instance.disagree.subscribe(modalDisagree);
     }

@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
 import { ModalComponent } from 'src/app/children/main-cabinet/modules/modal-window/modal/modal.component';
@@ -20,7 +20,6 @@ export class CardPage implements OnInit {
         private _route: ActivatedRoute,
         private _router: Router,
         private _cardService: CardService,
-        private _resolver: ComponentFactoryResolver,
     ) { }
 
     public ngOnInit(): void {
@@ -35,7 +34,7 @@ export class CardPage implements OnInit {
     }
 
     public onDeleteCard(): void {
-        this.showModal('УДАЛИТЬ КАРТУ?', 'ВЫ УДАЛИТЕ КАРТУ БЕЗ ВОЗМОЖНОСТИ ВОССТАНОВЛЕНИЯ');
+        this.showModal('УДАЛИТЬ КАРТУ?');
     }
 
     public onRedactCard(): void {
@@ -51,23 +50,20 @@ export class CardPage implements OnInit {
         });
     }
 
-    private showModal(modalTitle: string, modalDescription: string): void {
-        const modalFactory: ComponentFactory<ModalComponent> = this._resolver.resolveComponentFactory(ModalComponent);
-        this.refDir.containerRef.clear();
-        const component: ComponentRef<ModalComponent> = this.refDir.containerRef.createComponent(modalFactory);
-        component.instance.title = modalTitle;
-        component.instance.description = modalDescription;
+    private showModal(modalTitle: string): void {
+        this.refDir.container.clear();
+        const component: ComponentRef<ModalComponent> = this.refDir.container.createComponent(ModalComponent);
 
+        component.instance.title = modalTitle;
         component.instance.agree.subscribe(() => {
-            this.refDir.containerRef.clear();
+            this.refDir.container.clear();
             this._route.params.subscribe((params: Params) => {
                 this._cardService.deleteCardById(+params['id']);
             });
             this._router.navigate(['cabinet']);
         });
-
         component.instance.disagree.subscribe(() => {
-            this.refDir.containerRef.clear();
+            this.refDir.container.clear();
         });
     }
 
