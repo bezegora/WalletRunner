@@ -46,7 +46,6 @@ export class CardPage implements OnInit {
 
     public onChangeFavourites(): void {
         this.card.isFavorite = !this.card.isFavorite;
-        console.log(this.card.isFavorite);
         this._route.params.subscribe((params: Params) => {
             this._cardService.changeIsFavorite(+params['id']);
         });

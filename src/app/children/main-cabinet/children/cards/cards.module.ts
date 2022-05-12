@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { PaintDirectivesModule } from '../../directives/paint-directive.module';
 
-import { PaintDirective } from '../../directives/paint.directive';
 import { ModalModule } from '../../modules/modal-window/modal/modal.module';
 import { CardConvertModel } from '../../pipes/card-model-to-view.pipe';
 import { NumberPipe } from '../../pipes/number.pipe';
@@ -31,7 +31,6 @@ const routes: Routes = [
         EditCardPage,
         NumberPipe,
         CardConvertModel,
-        PaintDirective,
     ],
     imports: [
         CommonModule,
@@ -39,6 +38,7 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         ModalModule,
+        PaintDirectivesModule,
     ],
     exports: [
         CardItemComponent,

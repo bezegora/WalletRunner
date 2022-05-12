@@ -1,9 +1,9 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
     selector: '[paintCard]',
 })
-export class PaintDirective implements OnInit {
+export class PaintDirective implements OnInit, AfterViewInit {
     @Input() public paintCard!: string;
 
     private _background: { [store: string]: string; } = {
@@ -20,6 +20,9 @@ export class PaintDirective implements OnInit {
     }
 
     public ngOnInit(): void {
+    }
+
+    public ngAfterViewInit(): void {
         if (this._background[this.paintCard]) {
             this._el.nativeElement.style.background = `url('${this._background[this.paintCard]}') no-repeat`;
         }
@@ -28,8 +31,6 @@ export class PaintDirective implements OnInit {
         }
         this._el.nativeElement.style.backgroundPosition = 'center';
         this._el.nativeElement.style.backgroundSize = 'cover';
+
     }
-
-
-
 }

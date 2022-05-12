@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, map, Observable } from 'rxjs';
-import { CardModel } from '../../../../../main-cabinet/models/card.model';
+import { from, Observable } from 'rxjs';
 
+import { CardModel } from '../../../../../main-cabinet/models/card.model';
 import { CardService } from '../../../../../main-cabinet/services/card.service';
 
 @Component({

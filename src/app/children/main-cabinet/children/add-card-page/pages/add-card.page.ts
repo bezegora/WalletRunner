@@ -14,6 +14,7 @@ import { AddCardViewModel } from './add-card.view-model';
 })
 export class AddCardPage {
     public stores: string[] = ['Пятёрочка', 'Красное&белое', 'Перекресток', 'Лента', 'Магнит', 'Монетка'];
+    public selectedOptions!: string;
 
     public addCardViewModel: AddCardViewModel = new AddCardViewModel();
     @ViewChild(RefDirective, { static: false }) public refDir!: RefDirective;

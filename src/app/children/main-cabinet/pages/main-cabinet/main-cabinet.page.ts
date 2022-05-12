@@ -30,12 +30,9 @@ export class MainCabinetPage implements OnInit {
 
     public geolocationTest = async (): Promise<void> => {
         const coordinates: Position = await Geolocation.getCurrentPosition();
-        console.log(coordinates.coords.latitude);
-        console.log(coordinates.coords.longitude);
-
         this._cardService.getSortedStoresFromServer(coordinates.coords.latitude, coordinates.coords.longitude)
             .pipe(
-                map((v: CardModel[]) => v.map((card: CardModel) => console.log(card)))
+                map((v: string[]) => v.map((card: string) => console.log(card)))
             )
             .subscribe();
     };

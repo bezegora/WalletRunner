@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Geolocation, Position } from '@capacitor/geolocation';
 import { GetResult, Storage } from '@capacitor/storage';
 import { from, map, Observable, of } from 'rxjs';
 
@@ -15,16 +16,6 @@ export class CardService {
     constructor(
         private _http: HttpClient,
     ) { }
-
-    // public initialize(): void {
-    // this._mockCard = [
-    //     { title: 'Пятёрочка', cardNumber: 123456789, id: 1 },
-    //     { title: 'Магнит', cardNumber: 123456, id: 2 },
-    //     { title: 'Монетка', cardNumber: 123, id: 3 },
-    // ].map((el: ICard) => new CardModel(el));
-    // this.refreshStorage();
-    // console.log('init');
-    // }
 
     public getCardById(id: number): CardModel {
         const findedCard: CardModel | undefined = this._mockCard.find((card: CardModel) => card.id === id);
@@ -49,40 +40,6 @@ export class CardService {
         } else {
             throw new Error('Storage пустой');
         }
-
-        // .then((response: GetResult) => {
-        //     if (response.value) {
-        //         const cards: CardModel[] = JSON.parse(response.value);
-        //         console.log(cards);
-
-        //         return of(cards);
-
-        //         // .pipe(
-        //         //     map((v: CardModel) => {
-        //         //         this._mockCard.push(v);
-        //         //         console.log(v);
-
-        //         //         return v;
-        //         //     })
-        //         // );
-        //     }
-        //     console.log('no response');
-
-        //     return of([]).pipe(
-        //         map((v: any) => {
-        //             return v;
-        //         })
-        //     );
-
-        // });
-        // console.log('no response');
-
-        // return of([]).pipe(
-        //     map((v: any) => {
-        //         return v;
-        //     })
-        // );
-
     }
 
     public addCard(card: CardModel): void {
@@ -124,7 +81,7 @@ export class CardService {
         this.refreshStorage();
     }
 
-    public getSortedStoresFromServer(lat: number, long: number): Observable<CardModel[]> {
+    public getSortedStoresFromServer(lat: number, long: number): Observable<string[]> {
 
         const cards: string[] = this._mockCard.map((card: CardModel) => {
             return card.title;
@@ -170,11 +127,11 @@ export class CardService {
             Storage.set({
                 key: 'cards',
                 value: JSON.stringify(this._mockCard)
-            }).then(() => {
-                // if (result.value) {
-                //     this._mockCard = JSON.parse(result.value);
-                console.log('refreshed');
             });
+            // .then(() => {
+            //     // if (result.value) {
+            //     //     this._mockCard = JSON.parse(result.value);
+            // });
         });
     }
 }
