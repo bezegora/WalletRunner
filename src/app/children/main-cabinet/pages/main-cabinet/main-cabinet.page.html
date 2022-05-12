@@ -1,5 +1,5 @@
 <h1>ВАШИ КАРТЫ</h1>
-<div *ngIf="mockCards$ | async; else noelement" class="container">
+<div class="container">
     <app-card-list></app-card-list>
     <button class="btn" (click)="toAddCardPage()">&plus;</button>
     <button class="btn" (click)="geolocationTest()"></button>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Geolocation, Position } from '@capacitor/geolocation';
 import { GetResult, Storage } from '@capacitor/storage';
-import { from, map, Observable, of } from 'rxjs';
+import { from, lastValueFrom, map, Observable, of, Subscription } from 'rxjs';
 
 import { CardModel } from '../models/card.model';
 
@@ -27,16 +27,20 @@ export class CardService {
     }
 
     public async getCardList(): Promise<CardModel[]> {
-        // let cards: CardModel[];
         const test: { value: string | null } = await Storage.get({
             key: 'cards'
         });
         if (test.value) {
-            let tmp: CardModel[] = JSON.parse(test.value);
-            tmp = tmp.sort((a: CardModel, b: CardModel) => Number.parseInt(a.isFavorite.toString()) - Number.parseInt(b.isFavorite.toString()));
-            this._mockCard = tmp;
+            let cardList: CardModel[] = JSON.parse(test.value);
+            this._mockCard = cardList;
 
-            return tmp;
+            const position: Position = await Geolocation.getCurrentPosition();
+            const tmp$: Promise<CardModel[]> = lastValueFrom(this.getSortedCardsFromServer(position.coords.latitude, position.coords.longitude));
+
+            cardList = await tmp$;
+            this._mockCard = cardList;
+
+            return cardList;
         } else {
             throw new Error('Storage пустой');
         }
@@ -81,7 +85,7 @@ export class CardService {
         this.refreshStorage();
     }
 
-    public getSortedStoresFromServer(lat: number, long: number): Observable<string[]> {
+    public getSortedCardsFromServer(lat: number, long: number): Observable<CardModel[]> {
 
         const cards: string[] = this._mockCard.map((card: CardModel) => {
             return card.title;
@@ -95,26 +99,21 @@ export class CardService {
 
         console.log(requestParams);
 
-        // let test: string = `${this._apiUrl}/SortMyCards?`;
-
-        // test += `latitude=${lat}&longitude=${long}`;
-        // this._mockCard.forEach((element: CardModel) => {
-        //     test += `&cards=${element.title}`;
-        // });
-
         return this._http.post(`${this._apiUrl}/SortMyCards/`, { body: requestParams })
             .pipe(
                 map((v: any) => {
-                    return v;
+                    const tmp: CardModel[] = [];
+                    v.forEach((store: string) => {
+                        this._mockCard.forEach((card: CardModel) => {
+                            if (card.title === store) {
+                                tmp.push(card);
+                            }
+                        });
+                    });
+
+                    return tmp.sort((a: CardModel, b: CardModel) => Number(b.isFavorite) - Number(a.isFavorite));
                 })
             );
-
-        // return this._http.get<ICard[]>(test + '/')
-        //     .pipe(
-        //         map((data: ICard[]) => {
-        //             return data.map((i: ICard) => new CardModel(i));
-        //         })
-        //     );
     };
 
     private refreshStorage(): void {

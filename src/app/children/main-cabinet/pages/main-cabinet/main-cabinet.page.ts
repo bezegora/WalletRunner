@@ -20,7 +20,7 @@ export class MainCabinetPage implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        this.mockCards$ = from(this._cardService.getCardList());
+        // this.mockCards$ = from(this._cardService.getCardList());
     }
 
 
@@ -30,9 +30,9 @@ export class MainCabinetPage implements OnInit {
 
     public geolocationTest = async (): Promise<void> => {
         const coordinates: Position = await Geolocation.getCurrentPosition();
-        this._cardService.getSortedStoresFromServer(coordinates.coords.latitude, coordinates.coords.longitude)
+        this._cardService.getSortedCardsFromServer(coordinates.coords.latitude, coordinates.coords.longitude)
             .pipe(
-                map((v: string[]) => v.map((card: string) => console.log(card)))
+                map((v: CardModel[]) => v.map((card: CardModel) => console.log(card.title)))
             )
             .subscribe();
     };
