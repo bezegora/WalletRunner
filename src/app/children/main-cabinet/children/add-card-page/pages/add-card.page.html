@@ -17,7 +17,12 @@
     <br />
     <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
     <br />
-    <select name="stores" id="storesSelect" formControlName="store" [(ngModel)]="selectedOptions">
+    <select
+        name="stores"
+        id="storesSelect"
+        formControlName="store"
+        [(ngModel)]="selectedOptions"
+    >
         <option *ngFor="let store of stores" [value]="store">
             {{ store }}
         </option>

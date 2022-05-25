@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Geolocation, Position } from '@capacitor/geolocation';
 import { GetResult, Storage } from '@capacitor/storage';
-import { from, lastValueFrom, map, Observable, of, Subscription } from 'rxjs';
+import { finalize, from, map, Observable, switchMap, take } from 'rxjs';
 
 import { CardModel } from '../models/card.model';
 
@@ -10,6 +10,11 @@ import { CardModel } from '../models/card.model';
     providedIn: 'root',
 })
 export class CardService {
+    public get isLoaded(): boolean {
+        return this._isLoaded;
+    }
+
+    private _isLoaded: boolean = false;
     private _mockCard!: CardModel[];
     private _apiUrl: string = 'http://stlad.ru';
 
@@ -26,24 +31,50 @@ export class CardService {
         return findedCard;
     }
 
-    public async getCardList(): Promise<CardModel[]> {
-        const test: { value: string | null } = await Storage.get({
+    public offlineGetCardList(): Observable<CardModel[]> {
+        return from(Storage.get({
             key: 'cards'
-        });
-        if (test.value) {
-            let cardList: CardModel[] = JSON.parse(test.value);
-            this._mockCard = cardList;
+        }))
+            .pipe(
+                map((storageValue: { value: string | null }) => {
+                    if (storageValue.value) {
+                        this._mockCard = JSON.parse(storageValue.value);
 
-            const position: Position = await Geolocation.getCurrentPosition();
-            const tmp$: Promise<CardModel[]> = lastValueFrom(this.getSortedCardsFromServer(position.coords.latitude, position.coords.longitude));
+                        return this._mockCard.sort((a: CardModel, b: CardModel) => Number(b.isFavorite) - Number(a.isFavorite));
+                    } else {
+                        throw new TypeError('Storage пустой');
+                    }
+                })
+            );
+    }
 
-            cardList = await tmp$;
-            this._mockCard = cardList;
+    public getCardList(): Observable<CardModel[]> {
+        const tmp: Observable<CardModel[]> = from(Storage.get({
+            key: 'cards'
+        }))
+            .pipe(
+                take(1),
+                map((storageValue: { value: string | null }) => {
+                    if (storageValue.value) {
+                        this._mockCard = JSON.parse(storageValue.value);
 
-            return cardList;
-        } else {
-            throw new Error('Storage пустой');
-        }
+                        return this._mockCard;
+                    } else {
+                        throw new TypeError('Storage пустой');
+                    }
+                }),
+                switchMap((cards: CardModel[]) => {
+                    return Geolocation.getCurrentPosition();
+                }),
+                switchMap((position: Position) => {
+                    return this.getSortedCardsFromServer(position.coords.latitude, position.coords.longitude);
+                }),
+                finalize(() => {
+                    this._isLoaded = true;
+                })
+            );
+
+        return tmp;
     }
 
     public addCard(card: CardModel): void {
@@ -87,21 +118,19 @@ export class CardService {
 
     public getSortedCardsFromServer(lat: number, long: number): Observable<CardModel[]> {
 
-        const cards: string[] = this._mockCard.map((card: CardModel) => {
+        const stores: string[] = this._mockCard.map((card: CardModel) => {
             return card.title;
         });
 
         const requestParams: { latitude: number, longitude: number, cards: string[] } = {
             latitude: lat,
             longitude: long,
-            cards: cards
+            cards: stores
         };
 
-        console.log(requestParams);
-
-        return this._http.post(`${this._apiUrl}/SortMyCards/`, { body: requestParams })
+        return this._http.post<string[]>(`${this._apiUrl}/SortMyCards/`, { body: requestParams })
             .pipe(
-                map((v: any) => {
+                map((v: string[]) => {
                     const tmp: CardModel[] = [];
                     v.forEach((store: string) => {
                         this._mockCard.forEach((card: CardModel) => {
@@ -110,9 +139,13 @@ export class CardService {
                             }
                         });
                     });
+                    Storage.set({
+                        key: 'cards',
+                        value: JSON.stringify(tmp)
+                    });
 
                     return tmp.sort((a: CardModel, b: CardModel) => Number(b.isFavorite) - Number(a.isFavorite));
-                })
+                }),
             );
     };
 
@@ -127,10 +160,6 @@ export class CardService {
                 key: 'cards',
                 value: JSON.stringify(this._mockCard)
             });
-            // .then(() => {
-            //     // if (result.value) {
-            //     //     this._mockCard = JSON.parse(result.value);
-            // });
         });
     }
 }

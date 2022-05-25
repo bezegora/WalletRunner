@@ -1,5 +1,6 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { CardModel } from 'src/app/children/main-cabinet/models/card.model';
+
+import { CardModel } from '../../../../.../../models/card.model';
 
 
 export class EditCardViewModel {

@@ -1,8 +1,14 @@
 <h1>ВАШИ КАРТЫ</h1>
 <div class="container">
+    <div *ngIf="!cardService.isLoaded">
+        <main class="container">
+            <p class="lead"></p>
+        </main>
+    </div>
     <app-card-list></app-card-list>
     <button class="btn" (click)="toAddCardPage()">&plus;</button>
-    <button class="btn" (click)="geolocationTest()"></button>
+    <!-- <button class="btn" (click)="geolocationTest()"></button> -->
+    <button class="btn" (click)="logout()"></button>
 </div>
 <ng-template #noelement class="container"
     ><p>ДОБАВЬТЕ СВОИ КАРТЫ</p>

@@ -1,4 +1,3 @@
-<div class="card" [paintCard]="card.title">
-    <h2>{{ card.title }}</h2>
+<div class="card" [paintCard]="card.title" (click)="onCardClick()" [@cardMoveTrigger]="text">
     <p>{{ card.cardNumber | split }}</p>
 </div>

@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { CardModel } from '../../../models/card.model';
+import { CardModel } from '../models/card.model';
 
 export class AddCardViewModel {
     public cardForm: FormGroup = new FormGroup({

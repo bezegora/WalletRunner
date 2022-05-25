@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable, of } from 'rxjs';
 
 import { CardModel } from '../../../../../main-cabinet/models/card.model';
 import { CardService } from '../../../../../main-cabinet/services/card.service';
@@ -20,13 +20,10 @@ export class CardListComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.mockCards$ = from(this._cardService.getCardList());
+        if (navigator.onLine) {
+            this.mockCards$ = this._cardService.getCardList();
+        } else {
+            this.mockCards$ = this._cardService.offlineGetCardList();
+        }
     }
-
-
-
-    public onCardClick(card: CardModel): void {
-        this._router.navigate(['card', card.id]);
-    };
-
 }

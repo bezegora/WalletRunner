@@ -2,10 +2,11 @@ import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
-import { CardModel } from 'src/app/children/main-cabinet/models/card.model';
-import { ModalComponent } from 'src/app/children/main-cabinet/modules/modal-window/modal/modal.component';
-import { RefDirective } from 'src/app/children/main-cabinet/modules/modal-window/ref.directive';
+import { fromEvent, take, takeUntil } from 'rxjs';
 
+import { CardModel } from '../../../../../main-cabinet/models/card.model';
+import { ModalComponent } from '../../../../../main-cabinet/modules/modal-window/modal/modal.component';
+import { RefDirective } from '../../../../../main-cabinet/modules/modal-window/ref.directive';
 import { CardService } from '../../../../../main-cabinet/services/card.service';
 import { EditCardViewModel } from './edit-card.view-model';
 
@@ -15,26 +16,28 @@ import { EditCardViewModel } from './edit-card.view-model';
 })
 export class EditCardPage implements OnInit {
 
-    public stores: string[] = ['Пятёрочка', 'Красное&белое', 'Перекресток', 'Лента', 'Магнит', 'Монетка'];
+    public stores: string[] = ['Пятёрочка', 'Красное&белое', 'Перекрёсток', 'Лента', 'Магнит', 'Монетка'];
     public editCardViewModel!: EditCardViewModel;
     public storeForm!: FormGroup;
-    @ViewChild(RefDirective, { static: false }) public refDir!: RefDirective;
+    @ViewChild(RefDirective, { static: false })
+    public refDir!: RefDirective;
 
     constructor(
         private _route: ActivatedRoute,
         private _cardService: CardService,
         private _router: Router,
     ) {
-        this._route.params.subscribe((params: Params) => {
-            const card: CardModel = this._cardService.getCardById(+params['id']);
-            this.editCardViewModel = new EditCardViewModel(card);
-        });
-
+        this._route.params
+            .subscribe((params: Params) => {
+                const card: CardModel = this._cardService.getCardById(+params['id']);
+                this.editCardViewModel = new EditCardViewModel(card);
+            })
+            .unsubscribe();
         this.storeForm = this.editCardViewModel.storeForm;
     }
 
     public ngOnInit(): void {
-        JsBarcode('#barcode', this.editCardViewModel.card.cardNumber.toString());
+        JsBarcode('#barcode', this.editCardViewModel.card.cardNumber.toString(), { background: '#E9E9E9', width: 3, height: 70 });
     }
 
     public onSubmit(): void {
@@ -66,9 +69,15 @@ export class EditCardPage implements OnInit {
         const component: ComponentRef<ModalComponent> = this.refDir.container.createComponent(ModalComponent);
 
         component.instance.title = modalTitle;
-        component.instance.agree.subscribe(modalAgree);
-        component.instance.disagree.subscribe(modalDisagree);
+        component.instance.agree
+            .pipe(
+                take(1)
+            )
+            .subscribe(modalAgree);
+        component.instance.disagree
+            .pipe(
+                take(1)
+            )
+            .subscribe(modalDisagree);
     }
-
-
 }

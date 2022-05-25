@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation, Position } from '@capacitor/geolocation';
-import { from, map, Observable } from 'rxjs';
+import { Storage } from '@capacitor/storage';
+import { map, Observable } from 'rxjs';
 
 import { CardService } from '../../../main-cabinet/services/card.service';
 import { CardModel } from '../../models/card.model';
@@ -16,11 +17,11 @@ export class MainCabinetPage implements OnInit {
 
     constructor(
         private _router: Router,
-        private _cardService: CardService,
-    ) { }
+        public cardService: CardService,
+    ) {
+    }
 
     public ngOnInit(): void {
-        // this.mockCards$ = from(this._cardService.getCardList());
     }
 
 
@@ -28,13 +29,19 @@ export class MainCabinetPage implements OnInit {
         this._router.navigate(['add-card']);
     }
 
-    public geolocationTest = async (): Promise<void> => {
-        const coordinates: Position = await Geolocation.getCurrentPosition();
-        this._cardService.getSortedCardsFromServer(coordinates.coords.latitude, coordinates.coords.longitude)
-            .pipe(
-                map((v: CardModel[]) => v.map((card: CardModel) => console.log(card.title)))
-            )
-            .subscribe();
-    };
+    // public geolocationTest = async (): Promise<void> => {
+    //     const coordinates: Position = await Geolocation.getCurrentPosition();
+    //     this.cardService.getSortedCardsFromServer(coordinates.coords.latitude, coordinates.coords.longitude)
+    //         .pipe(
+    //             map((v: CardModel[]) => v.map((card: CardModel) => console.log(card.title))),
+    //         )
+    //         .subscribe();
+    // };
 
+    public logout(): void {
+        Storage.remove({
+            key: 'isLogged'
+        });
+        this._router.navigate(['/login']);
+    }
 }

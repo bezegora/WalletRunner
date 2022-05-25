@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { AddCardModule } from './children/add-card-page/add-card.module';
 import { CardsModule } from './children/cards/cards.module';
