@@ -4,8 +4,10 @@ import { AfterViewInit, Directive, ElementRef, HostBinding, HostListener, Input,
     selector: '[paintCard]',
 })
 export class PaintDirective implements OnInit, OnChanges {
-    @Input() public paintCard!: string;
-    @HostBinding('style.background') public hostbinder!: string;
+    @Input()
+    public paintCard!: string;
+    @HostBinding('style.background')
+    public hostbinder!: string;
 
     private _background: { [store: string]: string; } = {
         'Пятёрочка': `../../../../assets/card-background/Пятёрочка.png`,

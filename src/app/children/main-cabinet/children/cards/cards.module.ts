@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { PaintDirectivesModule } from '../../directives/paint-directive.module';
 
+import { PaintDirectivesModule } from '../../directives/paint-directive.module';
 import { ModalModule } from '../../modules/modal-window/modal/modal.module';
 import { CardConvertModel } from '../../pipes/card-model-to-view.pipe';
 import { NumberPipe } from '../../pipes/number.pipe';

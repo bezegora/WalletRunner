@@ -1,14 +1,27 @@
-<button class="btn" (click)="onClickBack()">&#8592;</button>
-<button class="btn menu-btn" (click)="onDeleteCard()">&#10006;</button>
-<button class="btn menu-btn" (click)="onRedactCard()">&#9998;</button>
-<button class="btn menu-btn star" (click)="onChangeFavourites()" *ngIf="!card.isFavorite">&star;</button>
-<button class="btn menu-btn star" (click)="onChangeFavourites()" *ngIf="card.isFavorite">&starf;</button>
-<ng-template appRef></ng-template>
-<div>
-    <h1>{{ card.title }}</h1>
-    <br />
-    <br />
-    <canvas id="barcode"></canvas>
-    <br />
-    <!-- <p>{{ card.num | split }}</p> -->
+<div class="container">
+    <button class="btn back" (click)="onClickBack()"></button>
+    <h1>WALLET RUNNER</h1>
+    <button class="btn menu-btn edit" (click)="onRedactCard()"></button>
+    <button
+        class="btn menu-btn empty-star"
+        (click)="onChangeFavourites()"
+        *ngIf="!card.isFavorite"
+    ></button>
+    <button
+        class="btn menu-btn filled-star"
+        (click)="onChangeFavourites()"
+        *ngIf="card.isFavorite"
+    ></button>
+    <button class="btn menu-btn delete" (click)="onDeleteCard()"></button>
+    <ng-template appRef></ng-template>
+    <div>
+        <div [paintCard]="card.title" class="card"></div>
+        <img id="barcode" class="barcode" />
+        <br />
+        <br />
+        <div class="card-number">
+            <label>НОМЕР КАРТЫ</label>
+            <input value="{{card.cardNumber}}" readonly />
+        </div>
+    </div>
 </div>

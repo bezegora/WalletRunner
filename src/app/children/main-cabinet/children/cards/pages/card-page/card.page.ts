@@ -15,7 +15,8 @@ import { CardViewModel } from '../../../../view-models/card.viewmodel';
 export class CardPage implements OnInit {
     public card!: CardViewModel;
 
-    @ViewChild(RefDirective, { static: false }) public refDir!: RefDirective;
+    @ViewChild(RefDirective, { static: false })
+    public refDir!: RefDirective;
 
     constructor(
         private _route: ActivatedRoute,
@@ -29,7 +30,7 @@ export class CardPage implements OnInit {
                 this.card = new CardViewModel(this._cardService.getCardById(+params['id']));
             })
             .unsubscribe();
-        JsBarcode('#barcode', this.card.cardNumber.toString(), { background: '#E9E9E9', width: 3, height: 70 });
+        JsBarcode('#barcode', this.card.cardNumber.toString(), { width: 3, height: 70, displayValue: false });
     }
 
     public onClickBack(): void {

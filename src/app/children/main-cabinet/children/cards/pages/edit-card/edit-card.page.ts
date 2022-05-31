@@ -2,13 +2,13 @@ import { Component, ComponentRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import * as JsBarcode from 'jsbarcode';
-import { fromEvent, take, takeUntil } from 'rxjs';
+import { take } from 'rxjs';
 
 import { CardModel } from '../../../../../main-cabinet/models/card.model';
 import { ModalComponent } from '../../../../../main-cabinet/modules/modal-window/modal/modal.component';
 import { RefDirective } from '../../../../../main-cabinet/modules/modal-window/ref.directive';
 import { CardService } from '../../../../../main-cabinet/services/card.service';
-import { EditCardViewModel } from './edit-card.view-model';
+import { EditCardViewModel } from '../../../../view-models/edit-card.view-model';
 
 @Component({
     templateUrl: './edit-card.page.html',
@@ -21,6 +21,7 @@ export class EditCardPage implements OnInit {
     public storeForm!: FormGroup;
     @ViewChild(RefDirective, { static: false })
     public refDir!: RefDirective;
+    public selectedStore: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -34,14 +35,16 @@ export class EditCardPage implements OnInit {
             })
             .unsubscribe();
         this.storeForm = this.editCardViewModel.storeForm;
+        this.selectedStore = this.editCardViewModel.card.title;
     }
 
     public ngOnInit(): void {
-        JsBarcode('#barcode', this.editCardViewModel.card.cardNumber.toString(), { background: '#E9E9E9', width: 3, height: 70 });
+        JsBarcode('#barcode', this.editCardViewModel.card.cardNumber.toString(), { width: 3, height: 70, displayValue: false });
     }
 
     public onSubmit(): void {
-        this.showModal('СОХРАНИТЬ ИЗМЕНЕНИЯ',
+        this.showModal(
+            'СОХРАНИТЬ ИЗМЕНЕНИЯ',
             () => {
                 this.refDir.container.clear();
                 this._cardService.redactCardById(this.editCardViewModel.card.id, this.storeForm.value.store);
@@ -52,7 +55,8 @@ export class EditCardPage implements OnInit {
     }
 
     public onClickBack(): void {
-        this.showModal('СОХРАНИТЬ ИЗМЕНЕНИЯ',
+        this.showModal(
+            'СОХРАНИТЬ ИЗМЕНЕНИЯ',
             () => {
                 this.refDir.container.clear();
                 this._cardService.redactCardById(this.editCardViewModel.card.id, this.storeForm.value.store);

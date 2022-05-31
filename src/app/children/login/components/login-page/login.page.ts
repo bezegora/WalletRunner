@@ -4,8 +4,8 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { CustomError } from '../../classes/custom-error';
-import { FormGenerator } from '../../classes/form-generator';
 import { AuthService } from '../../services/auth.service';
+import { LoginViewModel } from '../../view-models/login.view-model';
 
 
 @Component({
@@ -21,14 +21,20 @@ import { AuthService } from '../../services/auth.service';
     ]
 })
 export class LoginPage {
-    public signInForm: FormGroup = FormGenerator.getInstance().getSignInForm();
+    public signInForm!: FormGroup;
     public signInError: CustomError = new CustomError('', false);
     public isSubmitDisabled: boolean = false;
+    private _loginViewModel: LoginViewModel;
 
     constructor(
         private _auth: AuthService,
         private _router: Router,
     ) {
+
+        this._loginViewModel = new LoginViewModel();
+        console.log(this._loginViewModel);
+        this.signInForm = this._loginViewModel.loginForm;
+        console.log(this.signInForm);
     }
 
     public signIn(): void {

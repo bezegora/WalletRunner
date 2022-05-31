@@ -3,17 +3,6 @@
     text-align: center;
 }
 
-.btn {
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    font-size: x-large;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
 p:empty {
     animation: loading 1.7s infinite linear;
     background: #dedfe1;
@@ -49,4 +38,44 @@ p:empty.lead {
     100% {
         background-position: 300px;
     }
+}
+
+h1 {
+    font-family: "SF Pro Display";
+    font-style: normal;
+    font-weight: bolder;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.085em;
+    position: absolute;
+    top: 7%;
+    bottom: 85%;
+    left: 25%;
+    right: 25%;
+}
+
+.container {
+    height: initial;
+    padding-top: 8em;
+    width: 100%;
+    position: absolute;
+    margin: 0;
+    height: 100vh;
+}
+
+.btn {
+    background: url("../../../../../../assets/buttons/icon_add.png") no-repeat
+        50% 50%;
+    width: 55px;
+    height: 55px;
+    margin-top: 1em;
+}
+
+.alpha {
+    width: 24px;
+    height: 38px;
+    position: absolute;
+    left: 8%;
+    top: 8%;
 }

@@ -3,11 +3,11 @@
 }
 
 .btn {
-    width: 50px;
-    height: 50px;
+    width: 23.5px;
+    height: 23.5px;
     padding: 0;
     font-weight: bolder;
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 .menu-btn {
@@ -16,4 +16,96 @@
 
 .star {
     font-weight: normal;
+}
+
+.card {
+    margin: auto;
+    margin-top: 8em;
+    box-shadow: 0px -5px 9px -2px #000000;
+    border-radius: 10px;
+}
+
+.back {
+    background: url("../../../../../../../../assets/buttons/icon_back.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    left: 5%;
+    top: 8%;
+}
+
+.filled-star {
+    background: url("../../../../../../../../assets/buttons/icon_избранное2.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    right: 13.5%;
+    top: 8%;
+}
+
+.empty-star {
+    background: url("../../../../../../../../assets/buttons/icon_избранное.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    right: 13.5%;
+    top: 8%;
+}
+
+.delete {
+    background: url("../../../../../../../../assets/buttons/icon_delete.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    right: 21%;
+    top: 8%;
+}
+
+.edit {
+    background: url("../../../../../../../../assets/buttons/icon_edit.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    right: 5%;
+    top: 8%;
+}
+
+.barcode {
+    box-sizing: border-box;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 317px;
+    margin-top: 10px;
+}
+
+label {
+    font-family: "SF Pro Display", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: small;
+    line-height: 12px;
+    color: #505759;
+    letter-spacing: 0.04em;
+    float: left;
+}
+
+input {
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 33px;
+    align-items: center;
+    letter-spacing: 0.04em;
+    height: 33px;
+    vertical-align: middle;
+    color: #000000;
+}
+
+.card-number {
+    max-width: 317px;
+    margin-right: auto;
+    margin-left: auto;
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { from, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { CardModel } from '../../../../../main-cabinet/models/card.model';
 import { CardService } from '../../../../../main-cabinet/services/card.service';
@@ -15,9 +14,7 @@ export class CardListComponent implements OnInit {
 
     constructor(
         private _cardService: CardService,
-        private _router: Router,
-    ) {
-    }
+    ) { }
 
     public ngOnInit(): void {
         if (navigator.onLine) {

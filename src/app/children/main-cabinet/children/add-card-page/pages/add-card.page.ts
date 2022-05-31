@@ -1,4 +1,4 @@
-import { Component, ComponentRef, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, ScanResult } from '@capacitor-community/barcode-scanner';
 import { take } from 'rxjs';
@@ -16,8 +16,16 @@ import { AddCardViewModel } from '../../../view-models/add-card.view-model';
 export class AddCardPage {
     public stores: string[] = ['Пятёрочка', 'Красное&белое', 'Перекрёсток', 'Лента', 'Магнит', 'Монетка'];
     public addCardViewModel: AddCardViewModel = new AddCardViewModel();
-    @ViewChild(RefDirective, { static: false }) public refDir!: RefDirective;
+    @ViewChild(RefDirective, { static: false })
+    public refDir!: RefDirective;
     public selectedOptions!: string;
+
+    public get isOnWeb(): boolean {
+        console.log(navigator.userAgent);
+
+        return /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
+    }
+
 
     constructor(
         private _router: Router,
@@ -31,7 +39,6 @@ export class AddCardPage {
     }
 
     public onSubmit(): void {
-
         const card: CardModel = this.addCardViewModel.toModel();
         if (this.addCardViewModel.cardForm.valid) {
             this.showModal(
@@ -53,6 +60,7 @@ export class AddCardPage {
         if (result.hasContent) {
         }
     }
+
     private showModal(modalTitle: string, modalAgree: VoidFunction, modalDisagree: VoidFunction): void {
         this.refDir.container.clear();
         const component: ComponentRef<ModalComponent> = this.refDir.container.createComponent(ModalComponent);

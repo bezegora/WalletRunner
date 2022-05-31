@@ -1,24 +1,36 @@
-<button class="btn" (click)="onClickBack()">&leftarrow;</button>
-<button
-    class="btn menu-btn"
-    type="submit"
-    [disabled]="!storeForm.valid"
-    (click)="onSubmit()"
->
-    &#10004;
-</button>
-<ng-template appRef></ng-template>
-<div>
-    <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+<div class="container">
+    <button class="btn back-btn" (click)="onClickBack()"></button>
+    <button
+        class="btn menu-btn submit-btn"
+        type="submit"
+        [disabled]="!storeForm.valid"
+        (click)="onSubmit()"
+    ></button>
+    <ng-template appRef></ng-template>
+    <div>
         <h1>WALLET RUNNER</h1>
-        <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
-        <select name="stores" id="storesSelect" formControlName="store">
-            <option *ngFor="let store of stores" [ngValue]="store">{{ store }}</option>
-        </select>
-    </form>
-    <br />
-    <br />
-    <canvas id="barcode"></canvas>
-    <br />
-    <!-- <p>{{ card.num | split}}</p> -->
+        <form [formGroup]="storeForm" (ngSubmit)="onSubmit()">
+            <div [paintCard]="selectedStore" class="card"></div>
+            <img id="barcode" class="barcode" />
+            <br />
+            <br />
+            <div class="block">
+                <label>НОМЕР КАРТЫ</label>
+                <input value="{{editCardViewModel.card.cardNumber}}" readonly />
+            </div>
+            <div class="block">
+                <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
+                <select
+                    name="stores"
+                    id="storesSelect"
+                    formControlName="store"
+                    [(ngModel)]="selectedStore"
+                >
+                    <option *ngFor="let store of stores" [ngValue]="store">
+                        {{ store }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
 </div>

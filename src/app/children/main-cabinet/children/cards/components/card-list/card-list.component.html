@@ -1,6 +1,6 @@
 <div>
     <app-card-item
-        *ngFor="let c of (mockCards$ | async)"
+        *ngFor="let c of mockCards$ | async"
         [card]="c | cardConvertModel"
     ></app-card-item>
 </div>

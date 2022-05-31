@@ -1,14 +1,8 @@
 <div class="backdrop"></div>
-
 <div class="modal">
-    <!-- <nav class="navbar"> -->
     <h1 class="prompt">
         {{ title }}
     </h1>
-    <!-- </nav>
-    <p>
-        {{ description }}
-    </p> -->
-    <button class="btn" (click)="agree.emit()">ДА</button>
-    <button class="btn" (click)="disagree.emit()">НЕТ</button>
+    <button class="btn btn-left" (click)="agree.emit()">ДА</button>
+    <button class="btn btn-right" (click)="disagree.emit()">НЕТ</button>
 </div>

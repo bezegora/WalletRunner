@@ -1,4 +1,3 @@
-<!-- <button class="btn" (click)="onClickBack()">&leftarrow;</button> -->
 <img
     src="../../../../../../assets/buttons/icon_back.png"
     class="back-btn"
@@ -14,7 +13,7 @@
 <form [formGroup]="addCardViewModel.cardForm">
     <ng-template appRef></ng-template>
     <p>ДОБАВЛЕНИЕ НОВОЙ КАРТЫ</p>
-    <br />
+    <br /><br />
     <label for="storesSelect">ВЫБЕРИТЕ МАГАЗИН</label>
     <br />
     <select
@@ -32,9 +31,15 @@
     <br />
     <label for="barcode">ШТРИХКОД</label>
     <br />
-    <p id="barcode">PLACEHOLDER</p>
+    <!-- <p id="barcode">PLACEHOLDER</p> -->
+    <!-- <br /> -->
+    <button (click)="onStartScan()" *ngIf="isOnWeb;else onWeb">
+        NOT IMPLEMENTED
+    </button>
+    <ng-template #onWeb>
+        <input type="file" accept=".png, .jpg, .jpeg" />
+    </ng-template>
     <br />
-    <button (click)="onStartScan()">NOT IMPLEMENTED</button>
     <br />
     <label for="num">НОМЕР КАРТЫ</label>
     <br />

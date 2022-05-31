@@ -10,7 +10,8 @@ export class ModalDialogComponent {
     public header!: string;
     @Input()
     public description!: string;
-    @Output() private _isConfirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    private _isConfirmed: EventEmitter<boolean> = new EventEmitter<boolean>();
     private confirm(): void {
         this._isConfirmed.emit(true);
     };

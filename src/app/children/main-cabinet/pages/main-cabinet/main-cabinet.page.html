@@ -1,16 +1,20 @@
-<h1>ВАШИ КАРТЫ</h1>
-<div class="container">
-    <div *ngIf="!cardService.isLoaded">
-        <main class="container">
-            <p class="lead"></p>
-        </main>
+<div class="body">
+    <img
+        src="../../../../../assets/sygils/icon_alpha.png"
+        alt="Альфа-Банк"
+        class="alpha"
+    />
+    <h1>WALLET RUNNER</h1>
+    <div class="container">
+        <div *ngIf="!cardService.isLoaded">
+            <main class="skeleton">
+                <p class="lead"></p>
+            </main>
+        </div>
+        <app-card-list></app-card-list>
+        <!-- <button class="btn" (click)="geolocationTest()"></button> -->
+        <!-- <button class="btn" (click)="logout()"></button> -->
+        <button class="btn" (click)="toAddCardPage()"></button>
+        <ng-template appRef></ng-template>
     </div>
-    <app-card-list></app-card-list>
-    <button class="btn" (click)="toAddCardPage()">&plus;</button>
-    <!-- <button class="btn" (click)="geolocationTest()"></button> -->
-    <button class="btn" (click)="logout()"></button>
 </div>
-<ng-template #noelement class="container"
-    ><p>ДОБАВЬТЕ СВОИ КАРТЫ</p>
-    <button class="btn" (click)="toAddCardPage()">&plus;</button>
-</ng-template>

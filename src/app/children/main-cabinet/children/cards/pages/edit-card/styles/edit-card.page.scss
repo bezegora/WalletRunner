@@ -1,7 +1,103 @@
 * {
-  text-align: center;
+    text-align: center;
 }
 
 .menu-btn {
     float: right;
 }
+
+.btn {
+    width: 23.5px;
+    height: 23.5px;
+    padding: 0;
+    font-weight: bolder;
+    font-size: x-large;
+}
+
+.star {
+    font-weight: normal;
+}
+
+.card {
+    margin: auto;
+    margin-top: 8em;
+    box-shadow: 0px -5px 9px -2px #000000;
+    border-radius: 10px;
+}
+
+.back-btn {
+    background: url("../../../../../../../../assets/buttons/icon_back.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    left: 5%;
+    top: 8%;
+}
+
+.submit-btn {
+    background: url("../../../../../../../../assets/buttons/icon_checkMark.png")
+        no-repeat 50% 50%;
+    position: absolute;
+    right: 5%;
+    top: 8%;
+}
+
+.barcode {
+    box-sizing: border-box;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 317px;
+    margin-top: 10px;
+}
+
+label {
+    font-family: "SF Pro Display", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: small;
+    line-height: 12px;
+    color: #505759;
+    letter-spacing: 0.04em;
+    float: left;
+}
+
+input {
+    padding: 0.4rem;
+    margin: 1.2rem 0;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 33px;
+    align-items: center;
+    letter-spacing: 0.04em;
+    height: 33px;
+    vertical-align: middle;
+    color: #000000;
+}
+
+.block {
+    max-width: 317px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+select {
+    box-sizing: border-box;
+    border: 1px solid #cfcfcf;
+    border-radius: 10px;
+}
+
+// br {
+//     content: "\n";
+//     line-height: 10px;
+//     font-size: larger;
+//     display: block;
+//     margin: 10px 0;
+// }
